@@ -110,10 +110,25 @@ class RFWC_Ticket_Generator {
 		}
 		set_transient( $lock_key, true, 60 );
 
-		// Re-check after acquiring the lock (another request may have completed).
+		// Numeric ticket generation needs a database-level lock. Unlike a
+		// transient, GET_LOCK() is atomic across concurrent PHP requests.
+		$numeric_generation_lock = false;
+		if ( $this->order_uses_random_numeric_format( $order ) ) {
+			$numeric_generation_lock = $this->acquire_numeric_generation_lock();
+			if ( ! $numeric_generation_lock ) {
+				delete_transient( $lock_key );
+				$order->add_order_note( __( 'Ticket generation could not acquire the database lock. Please retry ticket generation.', 'raffle-for-woocommerce' ) );
+				return array();
+			}
+		}
+
+		// Re-check after acquiring the locks (another request may have completed).
 		$order             = wc_get_order( $order_id ); // Refresh order data.
 		$tickets_generated = $order->get_meta( '_rfwc_tickets_generated', true );
 		if ( 'yes' === $tickets_generated ) {
+			if ( $numeric_generation_lock ) {
+				$this->release_numeric_generation_lock();
+			}
 			delete_transient( $lock_key );
 			return array();
 		}
@@ -141,8 +156,9 @@ class RFWC_Ticket_Generator {
 				continue;
 			}
 
-			$raffle_id = $product->get_id();
-			$quantity  = $item->get_quantity();
+			$raffle_id          = $product->get_id();
+			$requested_quantity = (int) $item->get_quantity();
+			$quantity           = $requested_quantity;
 
 			// Ensure we don't exceed available tickets.
 			$total_tickets = $product->get_total_tickets();
@@ -182,8 +198,14 @@ class RFWC_Ticket_Generator {
 			}
 
 			// Generate tickets for each quantity.
+			$item_generated_count = 0;
 			for ( $i = 0; $i < $quantity; $i++ ) {
 				$ticket_number = $this->generate_ticket_number( $raffle_id, $product );
+
+				// Never fall back to sequential numbers when the numeric pool is exhausted.
+				if ( false === $ticket_number ) {
+					break;
+				}
 
 				$ticket = new RFWC_Ticket();
 				$ticket->set_ticket_number( $ticket_number );
@@ -238,6 +260,7 @@ class RFWC_Ticket_Generator {
 				$ticket_id = $ticket->save();
 
 				if ( $ticket_id ) {
+					++$item_generated_count;
 					$generated_tickets[] = $ticket_id;
 
 					/**
@@ -250,11 +273,25 @@ class RFWC_Ticket_Generator {
 					 * @param bool        $is_gift  Whether this is a gift ticket.
 					 */
 					do_action( 'rfwc_ticket_generated', $ticket, $order, $is_gift );
+				} elseif ( 'random_numeric' === $product->get_ticket_format() ) {
+					break;
 				}
 			}
 
-			// Store ticket count on order item.
-			wc_update_order_item_meta( $item_id, '_rfwc_ticket_count', $quantity );
+			// Store the actual number of tickets generated, not the requested quantity.
+			wc_update_order_item_meta( $item_id, '_rfwc_ticket_count', $item_generated_count );
+
+			if ( 'random_numeric' === $product->get_ticket_format() && $item_generated_count < $requested_quantity ) {
+				$order->add_order_note(
+					sprintf(
+						/* translators: %1$d: generated ticket count, %2$d: requested ticket count, %3$s: raffle product name. */
+						__( 'Only %1$d of %2$d numeric tickets could be assigned for "%3$s". Please review this paid order.', 'raffle-for-woocommerce' ),
+						$item_generated_count,
+						$requested_quantity,
+						$product->get_name()
+					)
+				);
+			}
 		}
 
 		// Mark order as having tickets generated.
@@ -262,6 +299,13 @@ class RFWC_Ticket_Generator {
 			$order->update_meta_data( '_rfwc_tickets_generated', 'yes' );
 			$order->update_meta_data( '_rfwc_ticket_ids', $generated_tickets );
 			$order->save();
+
+			// Ticket rows and order metadata are now committed. Release the lock
+			// before sending emails or running other potentially slow callbacks.
+			if ( $numeric_generation_lock ) {
+				$this->release_numeric_generation_lock();
+				$numeric_generation_lock = false;
+			}
 
 			/**
 			 * Fires after tickets are generated for an order.
@@ -281,6 +325,11 @@ class RFWC_Ticket_Generator {
 
 			// Check for early draw on sold-out raffles.
 			$this->maybe_trigger_early_draw( $generated_tickets );
+		}
+
+		// Release the database-level numeric generation lock.
+		if ( $numeric_generation_lock ) {
+			$this->release_numeric_generation_lock();
 		}
 
 		// Release the generation lock.
@@ -378,7 +427,7 @@ class RFWC_Ticket_Generator {
 	 * @param int                 $raffle_id Raffle ID.
 	 * @param RFWC_Product_Raffle $product   Raffle product.
 	 *
-	 * @return string Ticket number.
+	 * @return string|false Ticket number, or false when no number is available.
 	 */
 	private function generate_ticket_number( $raffle_id, $product ) {
 		$format = $product->get_ticket_format();
@@ -403,6 +452,10 @@ class RFWC_Ticket_Generator {
 
 		if ( 'random' === $format ) {
 			return $this->generate_random_number( $raffle_id );
+		}
+
+		if ( 'random_numeric' === $format ) {
+			return $this->generate_random_numeric_number( $raffle_id, $product );
 		}
 
 		return $this->generate_sequential_number( $raffle_id );
@@ -430,6 +483,134 @@ class RFWC_Ticket_Generator {
 		}
 
 		return str_pad( $next_number, 6, '0', STR_PAD_LEFT );
+	}
+
+	/**
+	 * Check whether an order contains a raffle using numeric random tickets.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return bool
+	 */
+	private function order_uses_random_numeric_format( $order ) {
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+			if ( $product && 'raffle' === $product->get_type() && 'random_numeric' === $product->get_ticket_format() ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Acquire an atomic database lock for numeric ticket generation.
+	 *
+	 * One lock is intentionally used for this low-volume workflow so concurrent
+	 * callbacks cannot generate duplicate tickets for the same order or raffle.
+	 *
+	 * @return bool True when the lock was acquired.
+	 */
+	private function acquire_numeric_generation_lock() {
+		global $wpdb;
+
+		$lock = $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, %d)', 'rfwc_numeric_ticket_generation', 30 ) );
+		return 1 === (int) $lock;
+	}
+
+	/** Release the numeric ticket generation database lock. */
+	private function release_numeric_generation_lock() {
+		global $wpdb;
+
+		$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', 'rfwc_numeric_ticket_generation' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	}
+
+	/**
+	 * Generate a random, unused numeric ticket number within the product limit.
+	 *
+	 * Numeric legacy values such as 0001 and 001 are treated as the same number.
+	 * All existing rows are considered occupied because the current schema has
+	 * a UNIQUE key on (raffle_id, ticket_number), including cancelled rows.
+	 *
+	 * @param int                 $raffle_id Raffle ID.
+	 * @param RFWC_Product_Raffle $product   Raffle product.
+	 * @return string|false Ticket number, or false when no number is available.
+	 */
+	private function generate_random_numeric_number( $raffle_id, $product ) {
+		global $wpdb;
+
+		$total_tickets = $product->get_total_tickets();
+		if ( 'unlimited' === $total_tickets || absint( $total_tickets ) < 1 ) {
+			return false;
+		}
+
+		$total_tickets = absint( $total_tickets );
+		$table         = esc_sql( $wpdb->prefix . 'rfwc_tickets' );
+
+		// Recount inside the database lock; the product object's request cache
+		// may not reflect tickets generated by another request.
+		$sold = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$table} WHERE raffle_id = %d AND status IN (%s, %s)",
+				absint( $raffle_id ),
+				'active',
+				'winner'
+			)
+		);
+		$sold = absint( apply_filters( 'rfwc_tickets_sold_count', absint( $sold ), absint( $raffle_id ) ) );
+		if ( $sold >= $total_tickets ) {
+			return false;
+		}
+
+		// Include every status: the existing UNIQUE key blocks reinserting the
+		// same exact ticket_number even if its old row is cancelled.
+		$used_numbers = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT CAST(ticket_number AS UNSIGNED) AS numeric_ticket
+				FROM {$table}
+				WHERE raffle_id = %d
+				AND ticket_number REGEXP '^[0-9]+$'
+				AND CAST(ticket_number AS UNSIGNED) BETWEEN 1 AND %d
+				ORDER BY numeric_ticket ASC",
+				absint( $raffle_id ),
+				$total_tickets
+			)
+		);
+		if ( ! empty( $wpdb->last_error ) ) {
+			return false;
+		}
+
+		$used_numbers    = array_map( 'absint', (array) $used_numbers );
+		$available_count = $total_tickets - count( $used_numbers );
+		if ( $available_count < 1 ) {
+			return false;
+		}
+
+		// Select a uniform random rank among the free numbers, then map it to a gap.
+		$random_rank = random_int( 0, $available_count - 1 );
+		$next_number = 1;
+		foreach ( $used_numbers as $used_number ) {
+			if ( $used_number < $next_number ) {
+				continue;
+			}
+
+			$gap_size = $used_number - $next_number;
+			if ( $random_rank < $gap_size ) {
+				$selected_number = $next_number + $random_rank;
+				$padding         = max( 3, strlen( (string) $total_tickets ) );
+				return str_pad( (string) $selected_number, $padding, '0', STR_PAD_LEFT );
+			}
+
+			$random_rank -= $gap_size;
+			$next_number  = $used_number + 1;
+		}
+
+		if ( $next_number <= $total_tickets && $random_rank < ( $total_tickets - $next_number + 1 ) ) {
+			$selected_number = $next_number + $random_rank;
+			$padding         = max( 3, strlen( (string) $total_tickets ) );
+			return str_pad( (string) $selected_number, $padding, '0', STR_PAD_LEFT );
+		}
+
+		return false;
 	}
 
 	/**

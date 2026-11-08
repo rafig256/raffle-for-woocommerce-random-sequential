@@ -296,9 +296,10 @@ class RFWC_Admin {
 				);
 
 				$ticket_format_options = array(
-					''           => __( 'Use global setting', 'raffle-for-woocommerce' ),
-					'sequential' => __( 'Sequential (000001, 000002...)', 'raffle-for-woocommerce' ),
-					'random'     => __( 'Random (A7X9B2, K3M5N8...)', 'raffle-for-woocommerce' ),
+					''               => __( 'Use global setting', 'raffle-for-woocommerce' ),
+					'sequential'     => __( 'Sequential (000001, 000002...)', 'raffle-for-woocommerce' ),
+					'random'         => __( 'Random (A7X9B2, K3M5N8...)', 'raffle-for-woocommerce' ),
+					'random_numeric' => __( 'Random numeric (001, 002, 003...)', 'raffle-for-woocommerce' ),
 				);
 
 				/**

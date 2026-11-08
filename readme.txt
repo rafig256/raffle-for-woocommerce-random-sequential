@@ -1,11 +1,10 @@
-=== Raffle for WooCommerce ===
-Contributors: themology
-Donate link: https://themology.com/donate/
-Tags: raffle, lottery, competition, instant win, tickets
+=== Raffle for WooCommerce – Random Sequential ===
+Contributors: themology, Rafig256
+Tags: raffle, lottery, competition, instant win, tickets, random, sequential
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.17
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +15,18 @@ Sell raffle and lottery tickets in WooCommerce. Run prize competitions with inst
 **[Raffle for WooCommerce](https://themology.com/products/raffle-for-woocommerce)** helps you run raffles and sell tickets through your WooCommerce store. Create unlimited raffles, generate printable tickets with QR codes, and let customers buy tickets for someone else. Perfect for charities, clubs, schools, and promotional giveaways.
 
 This plugin is completely free. No feature locks. Everything listed below works out of the box.
+
+= About This Fork =
+
+This is a community fork of [Raffle for WooCommerce](https://themology.com/products/raffle-for-woocommerce) by Themology, maintained by [Rafig256](https://github.com/rafig256).
+
+**What's different:**
+
+* **Sequential numbers, random purchase:** Ticket numbers stay sequential (0001, 0002, …) but the order in which they are assigned/purchased is randomized. The first buyer might get ticket 156, the second ticket 256.
+* **Correct number padding:** Ticket numbers now pad to match the maximum ticket count (2-digit, 3-digit, …) instead of always using 4 digits.
+* **Minor UI improvements.**
+
+Everything else — features, shortcodes, email notifications, settings — works exactly like the original plugin. See the changelog for details.
 
 = Buy Tickets for Someone Else =
 
@@ -197,6 +208,7 @@ All shortcodes accept a product ID or use `id="latest"` / `id="active"` to autom
 * Read the [documentation](https://themology.com/products/raffle-for-woocommerce) at Themology.
 * Ask questions in the [WordPress.org support forum](https://wordpress.org/support/plugin/raffle-for-woocommerce/).
 * Visit [Themology.com](https://themology.com/support) for bug reports or feature requests.
+* Report fork-specific issues on the [GitHub repository](https://github.com/rafig256/raffle-for-woocommerce-random-sequential/issues).
 
 == Installation ==
 
@@ -221,6 +233,10 @@ All shortcodes accept a product ID or use `id="latest"` / `id="active"` to autom
 * PHP 7.4 or newer.
 
 == Frequently Asked Questions ==
+
+= How is this different from the original Raffle for WooCommerce? =
+
+This fork keeps ticket numbers sequential (0001, 0002, …) but randomizes the order in which they are assigned and purchased. It also fixes ticket-number padding based on the maximum ticket count, and includes minor UI improvements. Everything else works exactly like the original plugin. See the changelog for details.
 
 = Is this plugin actually free? =
 
@@ -348,6 +364,11 @@ When a free entry arrives by post or email, record it in WooCommerce > Raffle Ti
 16. Prize claimed.
 
 == Changelog ==
+= 2.0.0 =
+* Fork: Based on Raffle for WooCommerce 1.1.17 by Themology. Thanks to the original author.
+* Fixed: Ticket number padding now matches the maximum ticket count (2-digit, 3-digit, …).
+* Added: Randomized purchase order while keeping sequential ticket numbers.
+* Improved: Minor UI tweaks.
 
 = 1.1.17 =
 * New: Free entries tab at WooCommerce > Raffle Tickets for recording postal and other no-purchase entries. Each entry creates a completed order at 0.00 and issues tickets the same way a paid order does. Only the raffle ticket email is sent, never the WooCommerce order emails, and it can be turned off per entry. The form checks that the raffle is still open, has tickets left, and that the entrant answered the skill question when one is set.
