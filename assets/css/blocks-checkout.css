@@ -1,0 +1,277 @@
+/**
+ * Raffle for WooCommerce - Block Checkout Styles
+ *
+ * Styles for per-ticket gift recipient fields in the WooCommerce Block checkout.
+ *
+ * @package RaffleForWooCommerce
+ * @since   1.0.0
+ * @since   1.1.0 Updated for per-ticket recipient fields.
+ */
+
+/**
+ * Gift checkout block container.
+ */
+.rfwc-gift-checkout-block {
+	/**
+	 * Inherit the WooCommerce / theme primary color for interactive states.
+	 * --wc-primary is set by WooCommerce (Appearance settings).
+	 * --wp--preset--color--primary is set by the active block theme.
+	 * This ensures our hover/focus colors match the Place Order button,
+	 * Add Coupon link, and other checkout interactive elements.
+	 */
+	--rfwc-interactive: var(--wc-primary, var(--wp--preset--color--primary, #333));
+	margin: 1.5em 0;
+	padding: 1.5em;
+	background: #f8f8f8;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+
+.rfwc-gift-checkout-block .rfwc-gift-title {
+	margin: 0 0 0.5em;
+	padding: 0;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: #333;
+}
+
+.rfwc-gift-checkout-block .rfwc-gift-description {
+	margin: 0 0 1em;
+	font-size: 0.9em;
+	color: #666;
+	line-height: 1.5;
+}
+
+/**
+ * Gift checkbox.
+ */
+.rfwc-gift-checkout-block .rfwc-is-gift-field {
+	margin-bottom: 1em;
+}
+
+.rfwc-gift-checkout-block .rfwc-checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.rfwc-gift-checkout-block .rfwc-is-gift-checkbox {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+	cursor: pointer;
+}
+
+/**
+ * Recipient fields container.
+ */
+.rfwc-gift-checkout-block .rfwc-block-recipient-fields {
+	margin-top: 1em;
+}
+
+/**
+ * Item group.
+ */
+.rfwc-gift-checkout-block .rfwc-gift-item-group {
+	margin-bottom: 1.5em;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.rfwc-gift-checkout-block .rfwc-gift-item-group:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+/**
+ * Subtle product label (only shown when multiple raffle items in cart).
+ */
+.rfwc-gift-checkout-block .rfwc-gift-item-label {
+	margin: 0 0 0.75em;
+	padding: 0;
+	font-size: 0.85em;
+	font-weight: 500;
+	color: #666;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+/**
+ * Recipient set.
+ */
+.rfwc-gift-checkout-block .rfwc-gift-recipient-set {
+	margin-bottom: 1.25em;
+	padding: 1em;
+	background: #fff;
+	border: 1px solid #e8e8e8;
+	border-radius: 4px;
+}
+
+.rfwc-gift-checkout-block .rfwc-gift-recipient-set:last-child {
+	margin-bottom: 0.75em;
+}
+
+.rfwc-gift-checkout-block .rfwc-gift-recipient-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 0.75em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.rfwc-gift-checkout-block .rfwc-recipient-number {
+	font-weight: 600;
+	font-size: 0.9em;
+	color: #555;
+}
+
+.rfwc-gift-checkout-block .rfwc-remove-recipient {
+	background: none;
+	border: none;
+	color: #767676;
+	cursor: pointer;
+	font-size: 0.85em;
+	padding: 0.25em 0.5em;
+	text-decoration: underline;
+	transition: color 0.2s;
+}
+
+.rfwc-gift-checkout-block .rfwc-remove-recipient:hover {
+	color: var(--rfwc-interactive);
+}
+
+.rfwc-gift-checkout-block .rfwc-remove-recipient:focus-visible {
+	outline: 2px solid var(--rfwc-interactive);
+	outline-offset: 2px;
+}
+
+/**
+ * Name row (two columns).
+ */
+.rfwc-gift-checkout-block .rfwc-gift-name-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1em;
+}
+
+/**
+ * Fields.
+ */
+.rfwc-gift-checkout-block .rfwc-field {
+	margin-bottom: 0.75em;
+}
+
+.rfwc-gift-checkout-block .rfwc-field:last-child {
+	margin-bottom: 0;
+}
+
+.rfwc-gift-checkout-block .rfwc-field label {
+	display: block;
+	font-weight: 500;
+	margin-bottom: 0.4em;
+	font-size: 0.9em;
+	color: #333;
+}
+
+.rfwc-gift-checkout-block .rfwc-field label .required {
+	color: #cc1818;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.rfwc-gift-checkout-block .rfwc-input {
+	width: 100%;
+	padding: 0.65em 0.75em;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 0.95em;
+	font-family: inherit;
+	background: #fff;
+	box-sizing: border-box;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rfwc-gift-checkout-block .rfwc-input:focus {
+	border-color: var(--rfwc-interactive);
+	outline: none;
+	box-shadow: 0 0 0 1px var(--rfwc-interactive);
+}
+
+.rfwc-gift-checkout-block .rfwc-input.has-error {
+	border-color: #cc1818;
+}
+
+.rfwc-gift-checkout-block textarea.rfwc-input {
+	min-height: 60px;
+	resize: vertical;
+}
+
+.rfwc-gift-checkout-block .rfwc-field-help {
+	display: block;
+	margin-top: 0.25em;
+	font-size: 0.8em;
+	color: #666;
+}
+
+.rfwc-gift-checkout-block .rfwc-field-error {
+	display: block;
+	margin-top: 0.25em;
+	font-size: 0.8em;
+	color: #cc1818;
+	min-height: 1em;
+}
+
+/**
+ * Add recipient button.
+ */
+.rfwc-gift-checkout-block .rfwc-add-recipient {
+	display: inline-block;
+	background: none;
+	border: 1px dashed #bbb;
+	border-radius: 4px;
+	padding: 0.5em 1em;
+	color: #555;
+	cursor: pointer;
+	font-size: 0.9em;
+	transition: border-color 0.2s, color 0.2s;
+	width: 100%;
+	text-align: center;
+}
+
+.rfwc-gift-checkout-block .rfwc-add-recipient:hover {
+	border-color: var(--rfwc-interactive);
+	color: var(--rfwc-interactive);
+}
+
+.rfwc-gift-checkout-block .rfwc-add-recipient:focus-visible {
+	outline: 2px solid var(--rfwc-interactive);
+	outline-offset: 2px;
+}
+
+/**
+ * Hidden utility class.
+ */
+.rfwc-gift-checkout-block .rfwc-hidden {
+	display: none !important;
+}
+
+/**
+ * Responsive adjustments.
+ */
+@media screen and (max-width: 600px) {
+	.rfwc-gift-checkout-block {
+		padding: 1em;
+	}
+
+	.rfwc-gift-checkout-block .rfwc-gift-name-row {
+		grid-template-columns: 1fr;
+	}
+
+	.rfwc-gift-checkout-block .rfwc-gift-recipient-set {
+		padding: 0.75em;
+	}
+}

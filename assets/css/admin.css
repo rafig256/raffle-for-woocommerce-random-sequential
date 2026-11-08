@@ -1,0 +1,231 @@
+/**
+ * Raffle for WooCommerce - Admin Styles
+ *
+ * Minimal styles using native WordPress and WooCommerce admin patterns.
+ *
+ * @package RaffleForWooCommerce
+ * @since   1.0.0
+ */
+
+/* Raffle product type icons in admin tabs. */
+#woocommerce-product-data ul.wc-tabs li.raffle_options a::before,
+#woocommerce-product-data ul.wc-tabs li.raffle_tab a::before {
+	font-family: Dashicons;
+	content: "\f313";
+}
+
+#woocommerce-product-data ul.wc-tabs li.raffle_prize_options a::before,
+#woocommerce-product-data ul.wc-tabs li.raffle_prize_tab a::before {
+	font-family: Dashicons;
+	content: "\f168";
+}
+
+/* Utility class for conditional visibility */
+.rfwc-hidden {
+	display: none !important;
+}
+
+/* Raffle Tickets admin table column widths */
+.rfwc-tickets-table .column-ticket {
+	width: 90px;
+}
+
+.rfwc-tickets-table .column-order {
+	width: 80px;
+}
+
+.rfwc-tickets-table .column-date {
+	width: 140px;
+}
+
+/* Ticket number styling */
+.rfwc-ticket-number {
+	font-family: monospace;
+}
+
+/* Ticket status badges */
+.rfwc-status-badge {
+	display: inline-block;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 11px;
+	margin-left: 5px;
+}
+
+.rfwc-status-active {
+	background: #c6e1c6;
+	color: #5b841b;
+}
+
+.rfwc-status-winner {
+	background: #ffd700;
+	color: #333;
+}
+
+.rfwc-status-cancelled {
+	background: #eba3a3;
+	color: #761919;
+}
+
+/* Gift badge */
+.rfwc-gift-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: linear-gradient(135deg, #7f54b3 0%, #9b6dc6 100%);
+	color: #fff;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+.rfwc-gift-badge .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+/* Secondary text color */
+.rfwc-text-secondary {
+	color: #999;
+}
+
+/* Admin order raffle metabox */
+#rfwc-raffle-info .rfwc-metabox-title {
+	display: inline-flex;
+	align-items: center;
+}
+
+#rfwc-raffle-info .rfwc-metabox-title .dashicons {
+	margin-right: 6px;
+}
+
+.rfwc-metabox-content {
+	padding: 12px;
+}
+
+.rfwc-no-raffle {
+	color: #666;
+	font-style: italic;
+	margin: 0;
+	padding: 12px;
+}
+
+.rfwc-info-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.rfwc-info-table th,
+.rfwc-info-table td {
+	padding: 8px 12px;
+	text-align: left;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 13px;
+}
+
+.rfwc-info-table th {
+	width: 140px;
+	font-weight: 600;
+	color: #1d2327;
+	background: #f9f9f9;
+}
+
+.rfwc-info-table tr:last-child th,
+.rfwc-info-table tr:last-child td {
+	border-bottom: none;
+}
+
+/* Per-ticket recipients table in admin metabox. */
+.rfwc-recipients-table th {
+	width: auto;
+}
+
+.rfwc-recipients-table thead th {
+	background: #f0f0f1;
+	font-weight: 600;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: #50575e;
+	border-bottom: 2px solid #dcdcde;
+}
+
+.rfwc-recipients-table tbody td {
+	background: #fff;
+}
+
+.rfwc-recipients-table tbody tr:nth-child(even) td {
+	background: #f9f9f9;
+}
+
+.rfwc-ticket-code {
+	display: inline-block;
+	background: #f0f6fc;
+	padding: 4px 10px;
+	border-radius: 4px;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 13px;
+	color: #7f54b3;
+	font-weight: 600;
+	border: 1px solid #c3d9e8;
+	margin: 2px 4px 2px 0;
+}
+
+/* Gift column icon */
+.rfwc-gift-icon {
+	color: #7f54b3;
+}
+
+/* QR validation table - failed row */
+.rfwc-validation-failed {
+	background: #fcf0f0;
+}
+
+/* Pool question select dropdown — match WooCommerce select.short width */
+#raffle_product_data .rfwc-pool-question-field .select2-container {
+	width: 50% !important;
+	min-width: 250px;
+}
+
+/* Bulk discount tier fields */
+.rfwc-bulk-tier-fields {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.rfwc-bulk-tier-fields input.rfwc-bulk-min-qty {
+	width: 80px !important;
+}
+
+.rfwc-bulk-tier-fields input.rfwc-bulk-pct {
+	width: 70px !important;
+}
+
+.rfwc-bulk-tier-sep {
+	color: #666;
+	font-size: 13px;
+}
+
+.rfwc-bulk-remove-tier {
+	background: none;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	color: #a00;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1;
+	padding: 2px 6px;
+}
+
+.rfwc-bulk-remove-tier:hover {
+	background: #fcf0f0;
+	border-color: #a00;
+}
+
+.rfwc-bulk-notice .description em {
+	color: #996800;
+}

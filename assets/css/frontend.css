@@ -1,0 +1,1784 @@
+/**
+ * Raffle for WooCommerce - Frontend Styles
+ *
+ * @package RaffleForWooCommerce
+ * @since   1.0.0
+ */
+
+/* ==========================================================================
+   Accent Color Custom Properties
+   Override via WooCommerce > Settings > Raffle > Display > Accent Color.
+   ========================================================================== */
+
+:root {
+	--rfwc-accent: #7f54b3;
+	--rfwc-accent-rgb: 127, 84, 179;
+	--rfwc-accent-dark: #6b4299;
+	--rfwc-accent-light: #9b6bc9;
+	--rfwc-accent-darker: #5a3d82;
+	--rfwc-accent-bg-light: #f9f5ff;
+	--rfwc-accent-bg-medium: #f3eaff;
+	--rfwc-accent-border-solid: #e8deff;
+	--rfwc-accent-bg-hover: #faf8ff;
+
+	--rfwc-card-bg: #ffffff;
+	--rfwc-card-text: #333333;
+	--rfwc-card-text-secondary: #666666;
+	--rfwc-card-border: #e5e5e5;
+	--rfwc-button-text: #ffffff;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.rfwc-hidden {
+	display: none;
+}
+
+/* ==========================================================================
+   Countdown Timer
+   ========================================================================== */
+
+.rfwc-countdown-wrapper {
+	margin: 1.5em 0;
+	text-align: center;
+}
+
+.rfwc-countdown-label {
+	margin: 0 0 0.75em;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--rfwc-card-text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.rfwc-countdown {
+	display: inline-flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.rfwc-countdown-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 60px;
+	padding: 12px 8px 10px;
+	background: linear-gradient(180deg, var(--rfwc-accent) 0%, var(--rfwc-accent-dark) 100%);
+	border-radius: 8px;
+	box-shadow: 0 3px 10px rgba(var(--rfwc-accent-rgb), 0.3);
+}
+
+.rfwc-countdown-value {
+	font-size: 1.75em;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.rfwc-countdown-unit {
+	margin-top: 4px;
+	font-size: 0.7em;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.85);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.rfwc-countdown-ended {
+	padding: 1em 1.5em;
+	background: #f0f0f0;
+	border-radius: 8px;
+	font-size: 1em;
+	font-weight: 600;
+	color: #666;
+}
+
+/* ==========================================================================
+   Compact Countdown (Shop/Archive & Shortcodes)
+   ========================================================================== */
+
+.rfwc-countdown-compact {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	margin: 0.5em 0;
+	padding: 0.35em 0.75em;
+	background: rgba(var(--rfwc-accent-rgb), 0.08);
+	border: 1px solid rgba(var(--rfwc-accent-rgb), 0.2);
+	border-radius: 999px;
+	font-size: 0.85em;
+	line-height: 1.4;
+	white-space: nowrap;
+}
+
+.rfwc-countdown-compact-icon {
+	flex-shrink: 0;
+	font-size: 1em;
+	line-height: 1;
+}
+
+.rfwc-countdown-compact .rfwc-countdown-compact-label {
+	font-weight: 600;
+	color: var(--rfwc-card-text-secondary);
+}
+
+.rfwc-countdown-compact .rfwc-countdown {
+	display: inline;
+	gap: 0;
+	font-weight: 600;
+	color: var(--rfwc-accent);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-variant-numeric: tabular-nums;
+}
+
+.rfwc-countdown-compact .rfwc-countdown-days,
+.rfwc-countdown-compact .rfwc-countdown-hours,
+.rfwc-countdown-compact .rfwc-countdown-minutes,
+.rfwc-countdown-compact .rfwc-countdown-seconds {
+	font-weight: 700;
+}
+
+.rfwc-countdown-compact .rfwc-countdown-ended {
+	display: inline;
+	padding: 0;
+	background: none;
+	border-radius: 0;
+	font-size: 1em;
+	font-weight: 600;
+	color: #666;
+}
+
+/* Urgency state (< 3 days remaining) — warm orange shift */
+.rfwc-countdown-compact--urgent {
+	background: rgba(234, 88, 12, 0.08);
+	border-color: rgba(234, 88, 12, 0.25);
+}
+
+.rfwc-countdown-compact--urgent .rfwc-countdown-compact-label {
+	color: #9a3412;
+}
+
+.rfwc-countdown-compact--urgent .rfwc-countdown {
+	color: #ea580c;
+}
+
+/* Completed state — green */
+.rfwc-countdown-compact--completed {
+	background: rgba(22, 163, 74, 0.08);
+	border-color: rgba(22, 163, 74, 0.2);
+}
+
+.rfwc-countdown-compact--completed .rfwc-countdown-compact-icon {
+	color: #16a34a;
+}
+
+.rfwc-countdown-compact--completed .rfwc-countdown-compact-label {
+	color: #16a34a;
+}
+
+/* Ended state — gray */
+.rfwc-countdown-compact--ended {
+	background: rgba(0, 0, 0, 0.04);
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+.rfwc-countdown-compact--ended .rfwc-countdown-compact-label {
+	color: #999;
+}
+
+/* Shop loop alignment — keep compact pill on a single centered line */
+.woocommerce ul.products li.product .rfwc-countdown-compact {
+	display: inline-flex;
+	flex-wrap: nowrap;
+	margin: 0.5em 0;
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+
+.woocommerce ul.products li.product .rfwc-countdown-compact > * {
+	flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Shortcode: Raffle Card
+   ========================================================================== */
+
+.rfwc-card {
+	display: block;
+	max-width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid var(--rfwc-card-border);
+	border-radius: 8px;
+	overflow: hidden;
+	background: var(--rfwc-card-bg);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+	transition: box-shadow 0.2s ease;
+	text-align: center;
+}
+
+.rfwc-card:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.rfwc-card-image {
+	display: block;
+	width: 100%;
+}
+
+.rfwc-card-image img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.rfwc-card-body {
+	padding: 1em 1.25em;
+}
+
+.rfwc-card-title {
+	margin: 0 0 0.35em;
+	font-size: 1.05em;
+	font-weight: 700;
+	color: var(--rfwc-card-text);
+	line-height: 1.3;
+}
+
+.rfwc-card-title a,
+.rfwc-card-title a:visited,
+.rfwc-card-title a:focus {
+	color: inherit;
+	text-decoration: none !important;
+	border-bottom: none !important;
+	box-shadow: none !important;
+}
+
+.rfwc-card-title a:hover {
+	color: var(--rfwc-accent);
+	text-decoration: none !important;
+}
+
+.rfwc-card-image a,
+.rfwc-card-image a:visited,
+.rfwc-card-image a:focus {
+	text-decoration: none !important;
+	border-bottom: none !important;
+	box-shadow: none !important;
+}
+
+.rfwc-card-price {
+	margin: 0 0 0.5em;
+	font-size: 1.1em;
+	font-weight: 700;
+	color: var(--rfwc-card-text);
+}
+
+.rfwc-card-prize {
+	margin: 0.5em 0;
+	font-size: 0.85em;
+	color: var(--rfwc-card-text-secondary);
+}
+
+.rfwc-card-prize strong {
+	color: var(--rfwc-card-text);
+}
+
+.rfwc-card-button,
+a.rfwc-card-button,
+a.rfwc-card-button:visited {
+	display: inline-block;
+	margin-top: 0.75em;
+	padding: 0.6em 1.5em;
+	background: var(--rfwc-accent);
+	color: var(--rfwc-button-text) !important;
+	border: none !important;
+	border-bottom: none !important;
+	border-radius: 4px;
+	font-size: 0.9em;
+	font-weight: 600;
+	text-decoration: none !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+a.rfwc-card-button:hover,
+a.rfwc-card-button:focus {
+	background: var(--rfwc-accent-dark);
+	color: var(--rfwc-button-text) !important;
+	text-decoration: none !important;
+}
+
+.rfwc-card-button--ended,
+a.rfwc-card-button--ended,
+a.rfwc-card-button--ended:hover {
+	background: #ccc !important;
+	color: #666 !important;
+	cursor: default;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Multi-Card Grid ([raffle_cards] shortcode)
+   ========================================================================== */
+
+.rfwc-cards-grid {
+	display: grid;
+	gap: 1.5em;
+	margin: 1.5em 0;
+}
+
+.rfwc-cards-grid .rfwc-card {
+	max-width: none;
+}
+
+/* Column variants */
+.rfwc-cards-grid--cols-1 {
+	grid-template-columns: 1fr;
+	max-width: 400px;
+}
+
+.rfwc-cards-grid--cols-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.rfwc-cards-grid--cols-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.rfwc-cards-grid--cols-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+/* Responsive: collapse columns on smaller screens */
+@media (max-width: 900px) {
+	.rfwc-cards-grid--cols-3,
+	.rfwc-cards-grid--cols-4 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.rfwc-cards-grid--cols-2,
+	.rfwc-cards-grid--cols-3,
+	.rfwc-cards-grid--cols-4 {
+		grid-template-columns: 1fr;
+	}
+}
+
+.rfwc-cards-empty {
+	padding: 2em;
+	text-align: center;
+	color: var(--rfwc-card-text-secondary);
+	font-style: italic;
+}
+
+/* ==========================================================================
+   Progress Bar
+   ========================================================================== */
+
+.rfwc-progress-wrapper {
+	margin: 1.5em 0;
+}
+
+.rfwc-progress {
+	max-width: 100%;
+}
+
+.rfwc-progress-bar {
+	height: 12px;
+	background: #e8e8e8;
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.rfwc-progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, var(--rfwc-accent) 0%, var(--rfwc-accent-light) 100%);
+	border-radius: 6px;
+	min-width: 4px;
+	transition: width 0.5s ease;
+}
+
+.rfwc-progress-text {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 0.5em;
+	font-size: 0.9em;
+	color: var(--rfwc-card-text-secondary);
+}
+
+.rfwc-progress-text strong {
+	color: var(--rfwc-card-text);
+}
+
+/* ==========================================================================
+   Tickets Information
+   ========================================================================== */
+
+.rfwc-tickets-info {
+	margin: 1em 0;
+	font-size: 0.95em;
+	color: var(--rfwc-card-text-secondary);
+}
+
+.rfwc-tickets-info strong {
+	color: var(--rfwc-card-text);
+}
+
+/* ==========================================================================
+   Prize Information
+   ========================================================================== */
+
+.rfwc-prize-info {
+	margin: 1.5em 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: 0;
+}
+
+.rfwc-prize-info p {
+	margin: 0 0 0.5em;
+	font-size: 0.95em;
+}
+
+.rfwc-prize-info p:last-child {
+	margin-bottom: 0;
+}
+
+.rfwc-prize-label {
+	font-weight: 600;
+	color: var(--rfwc-card-text);
+}
+
+/* Prize Item - Used for custom and store credit types */
+.rfwc-prize-item {
+	display: block;
+	padding: 1em 1.25em;
+	margin-bottom: 0.75em;
+	background: linear-gradient(135deg, var(--rfwc-accent-bg-light) 0%, var(--rfwc-accent-bg-medium) 100%);
+	border: 1px solid rgba(var(--rfwc-accent-rgb), 0.2);
+	border-left: 4px solid var(--rfwc-accent);
+	border-radius: 0 8px 8px 0;
+}
+
+.rfwc-prize-item:last-child {
+	margin-bottom: 0;
+}
+
+.rfwc-prize-item-header {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	gap: 1em;
+	margin-bottom: 0.5em;
+}
+
+.rfwc-prize-item .rfwc-prize-tier {
+	display: inline-block !important;
+	margin: 0 !important;
+	padding: 0.25em 0.6em;
+	background: var(--rfwc-accent);
+	color: var(--rfwc-button-text) !important;
+	font-size: 0.8em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	border-radius: 4px;
+}
+
+.rfwc-prize-item-value {
+	font-weight: 700;
+	color: var(--rfwc-accent-darker);
+	font-size: 1.25em;
+	white-space: nowrap;
+}
+
+.rfwc-prize-item-value .woocommerce-Price-amount {
+	color: inherit;
+}
+
+.rfwc-prize-item-description {
+	margin: 0;
+	padding: 0;
+	font-size: 0.95em;
+	color: var(--rfwc-card-text-secondary);
+	line-height: 1.5;
+}
+
+/* Prize Product - Used for product prize type */
+.rfwc-prize-product {
+	display: block;
+	padding: 1em 1.25em;
+	margin-bottom: 0.75em;
+	background: linear-gradient(135deg, var(--rfwc-accent-bg-light) 0%, var(--rfwc-accent-bg-medium) 100%);
+	border: 1px solid rgba(var(--rfwc-accent-rgb), 0.2);
+	border-left: 4px solid var(--rfwc-accent);
+	border-radius: 0 8px 8px 0;
+}
+
+.rfwc-prize-product:last-child {
+	margin-bottom: 0;
+}
+
+.rfwc-prize-product .rfwc-prize-tier {
+	display: inline-block !important;
+	margin: 0 0 0.75em 0 !important;
+	padding: 0.25em 0.6em;
+	background: var(--rfwc-accent);
+	color: var(--rfwc-button-text) !important;
+	font-size: 0.8em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	border-radius: 4px;
+}
+
+.rfwc-prize-product-details {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	gap: 1em;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+}
+
+.rfwc-prize-product-image {
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+}
+
+.rfwc-prize-product-image img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 6px;
+	border: 1px solid var(--rfwc-card-border);
+}
+
+.rfwc-prize-product-info {
+	-webkit-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.rfwc-prize-product-name {
+	display: block;
+	font-weight: 600;
+	font-size: 1em;
+	color: var(--rfwc-card-text);
+	text-decoration: none;
+}
+
+.rfwc-prize-product-name:hover {
+	color: var(--rfwc-accent);
+}
+
+.rfwc-prize-product-value {
+	display: block;
+	margin-top: 0.35em;
+	font-size: 0.95em;
+	font-weight: 600;
+	color: var(--rfwc-accent-darker);
+}
+
+.rfwc-prize-description {
+	margin-top: 0.5em;
+	font-size: 0.9em;
+	color: var(--rfwc-card-text-secondary);
+}
+
+/* ==========================================================================
+   Raffle Status Notices
+   ========================================================================== */
+
+.rfwc-raffle-notice {
+	margin: 1.5em 0;
+	padding: 1em 1.25em;
+	border-radius: 6px;
+	font-size: 0.95em;
+}
+
+.rfwc-raffle-notice p {
+	margin: 0;
+}
+
+.rfwc-raffle-notice.rfwc-notice-not-started {
+	background: #fff8e5;
+	border-left: 4px solid #ffba00;
+	color: #6d5000;
+}
+
+.rfwc-raffle-notice.rfwc-notice-ended {
+	background: #fbeaea;
+	border-left: 4px solid #dc3232;
+	color: #8b1c1c;
+}
+
+.rfwc-raffle-notice.rfwc-notice-sold-out {
+	background: #e5f5fa;
+	border-left: 4px solid #00a0d2;
+	color: #005177;
+}
+
+.rfwc-max-tickets-notice {
+	display: block;
+	margin-top: 1em;
+	font-size: 0.85em;
+	color: #666;
+}
+
+.rfwc-cart-quantity-fixed {
+	display: inline-block;
+	padding: 0.4em 0.8em;
+	background: #f5f5f5;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-weight: 600;
+	color: #333;
+	text-align: center;
+	min-width: 2.5em;
+}
+
+/* ==========================================================================
+   Product Page Gift Toggle
+   ========================================================================== */
+
+/* ==========================================================================
+   Raffle Form Layout Reset
+   Many themes set form.cart to display:flex for simple/variable products.
+   Raffle products have additional elements (compliance tabs, skill question,
+   gift toggle, quantity wrapper, notice) that require block layout.
+   ========================================================================== */
+
+body.rfwc-raffle-product .woocommerce div.product form.cart,
+body.rfwc-raffle-product form.cart {
+	display: block !important;
+}
+
+/* ==========================================================================
+   Quantity Selector
+   ========================================================================== */
+
+.rfwc-quantity-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 0.75em;
+	margin: 1.25em 0;
+	padding: 0.85em 1em;
+	background: var(--rfwc-card-bg);
+	border: 1px solid var(--rfwc-card-border);
+	border-radius: 6px;
+}
+
+.rfwc-quantity-label {
+	font-weight: 600;
+	font-size: 0.95em;
+	color: var(--rfwc-card-text);
+	white-space: nowrap;
+	margin: 0 !important;
+}
+
+.rfwc-quantity-wrapper .quantity {
+	margin: 0 !important;
+}
+
+.rfwc-quantity-wrapper .quantity .qty {
+	width: 60px;
+	padding: 6px 8px;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 0.95em;
+}
+
+/* ==========================================================================
+   Range Slider (opt-in replacement for quantity input)
+   ========================================================================== */
+
+.rfwc-range-slider {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	gap: 0.75em;
+	min-width: 0;
+}
+
+.rfwc-range-slider-track {
+	flex: 1;
+	min-width: 0;
+}
+
+.rfwc-range-input {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	background: #e0e0e0;
+	border-radius: 4px;
+	outline: none;
+	cursor: pointer;
+}
+
+.rfwc-range-input::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 22px;
+	height: 22px;
+	background: var(--rfwc-accent);
+	border: 2px solid #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	transition: transform 0.15s ease;
+}
+
+.rfwc-range-input::-webkit-slider-thumb:hover {
+	transform: scale(1.15);
+}
+
+.rfwc-range-input::-moz-range-thumb {
+	width: 22px;
+	height: 22px;
+	background: var(--rfwc-accent);
+	border: 2px solid #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+}
+
+.rfwc-range-slider-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 3em;
+	flex-shrink: 0;
+}
+
+.rfwc-range-value {
+	font-size: 1.3em;
+	font-weight: 700;
+	color: var(--rfwc-accent);
+	line-height: 1.2;
+	font-variant-numeric: tabular-nums;
+}
+
+.rfwc-range-bounds {
+	font-size: 0.7em;
+	color: #999;
+	white-space: nowrap;
+}
+
+/* ==========================================================================
+   Gift Toggle
+   ========================================================================== */
+
+.rfwc-gift-toggle {
+	display: block;
+	clear: both;
+	margin: 1.5em 0;
+	padding: 1em 1.25em;
+	background: var(--rfwc-accent-bg-light);
+	border: 1px solid var(--rfwc-accent-border-solid);
+	border-radius: 6px;
+}
+
+.rfwc-gift-toggle label {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	font-weight: 600;
+	font-size: 0.95em;
+	color: var(--rfwc-card-text);
+	cursor: pointer;
+	margin: 0;
+}
+
+.rfwc-gift-toggle input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	min-width: 18px;
+	margin: 0;
+	accent-color: var(--rfwc-accent);
+}
+
+.rfwc-gift-toggle-hint {
+	display: block;
+	margin-top: 0.5em;
+	padding-left: 1.75em;
+	font-size: 0.8em;
+	color: #888;
+	font-style: italic;
+}
+
+/* ==========================================================================
+   My Account - My Tickets
+   ========================================================================== */
+
+.rfwc-ticket-number {
+	display: inline-block;
+	padding: 0.35em 0.6em;
+	background: #f0f0f0;
+	border-radius: 4px;
+	font-weight: 600;
+	font-size: 0.95em;
+	color: #333;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+}
+
+.rfwc-ticket-type {
+	display: block;
+	margin-top: 0.4em;
+	font-size: 0.85em;
+	color: var(--rfwc-accent);
+}
+
+/* ==========================================================================
+   Gift Checkout Fields
+   ========================================================================== */
+
+.rfwc-gift-checkout {
+	margin: 1.5em 0;
+	padding: 1em;
+	background: var(--rfwc-accent-bg-light);
+	border: 1px solid var(--rfwc-accent-border-solid);
+	border-radius: 6px;
+}
+
+.rfwc-gift-checkout h3 {
+	margin: 0 0 1em;
+	font-size: 1.1em;
+	color: #333;
+}
+
+.rfwc-gift-checkbox {
+	margin-bottom: 0.5em;
+}
+
+.rfwc-gift-checkbox label {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	cursor: pointer;
+}
+
+.rfwc-gift-fields {
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px solid var(--rfwc-accent-border-solid);
+}
+
+.rfwc-gift-fields .form-row {
+	margin-bottom: 1em;
+}
+
+.rfwc-gift-email-note {
+	margin-top: 0.5em;
+	font-size: 0.85em;
+	color: #666;
+	font-style: italic;
+}
+
+/* ==========================================================================
+   Gift Details on Order View
+   ========================================================================== */
+
+.rfwc-gift-details {
+	margin: 2em 0;
+}
+
+.rfwc-gift-details h2 {
+	margin-bottom: 1em;
+}
+
+.rfwc-gift-details .gift_details {
+	margin-bottom: 1em;
+}
+
+.rfwc-gift-details .gift_details th {
+	width: 30%;
+	text-align: left;
+}
+
+.rfwc-gift-note {
+	color: #666;
+	font-size: 0.9em;
+}
+
+/* ==========================================================================
+   Order Item Ticket Display
+   ========================================================================== */
+
+.rfwc-order-tickets {
+	margin-top: 0.5em;
+	padding: 0.5em 0;
+	font-size: 0.9em;
+	color: #666;
+}
+
+.rfwc-order-tickets strong {
+	color: #333;
+}
+
+/* ==========================================================================
+   Winners Display
+   ========================================================================== */
+
+.rfwc-winners-section {
+	margin: 1.5em 0;
+}
+
+.rfwc-winners-section h3 {
+	margin: 0 0 1em;
+	font-size: 1.1em;
+	color: #333;
+}
+
+.rfwc-winners-announcement {
+	background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+	border: 2px solid #fbbf24;
+	border-radius: 8px;
+	padding: 1.5em;
+}
+
+.rfwc-winners-header {
+	display: flex;
+	align-items: center;
+	gap: 0.75em;
+	margin-bottom: 1em;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #fbbf24;
+}
+
+.rfwc-trophy-icon {
+	font-size: 2em;
+}
+
+.rfwc-winners-title {
+	font-size: 1.2em;
+	font-weight: 600;
+	color: #92400e;
+}
+
+.rfwc-winners-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+}
+
+.rfwc-winner-item {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+	padding: 0.75em 1em;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 6px;
+}
+
+.rfwc-winner-tier {
+	flex-shrink: 0;
+}
+
+.rfwc-medal {
+	font-size: 1.5em;
+}
+
+.rfwc-tier-number {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	background: #d97706;
+	color: #fff;
+	border-radius: 50%;
+	font-size: 0.85em;
+	font-weight: 600;
+}
+
+.rfwc-winner-info {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.2em;
+}
+
+.rfwc-winner-avatar {
+	flex-shrink: 0;
+}
+
+.rfwc-winner-avatar img {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid rgba(255, 215, 0, 0.4);
+}
+
+.rfwc-winner-name {
+	font-weight: 600;
+	color: #333;
+}
+
+.rfwc-winner-city {
+	font-size: 0.85em;
+	color: #78716c;
+	font-style: italic;
+}
+
+.rfwc-winner-ticket {
+	font-size: 0.85em;
+	color: #666;
+	font-family: monospace;
+}
+
+.rfwc-winner-claimed {
+	color: #16a34a;
+	font-size: 1.2em;
+}
+
+.rfwc-winner-images {
+	display: flex;
+	gap: 0.4em;
+	flex-shrink: 0;
+	margin-left: auto;
+	align-items: center;
+}
+
+.rfwc-winner-product-image img,
+.rfwc-winner-prize-image img {
+	width: 48px;
+	height: 48px;
+	border-radius: 6px;
+	object-fit: cover;
+	border: 2px solid rgba(251, 191, 36, 0.3);
+	display: block;
+}
+
+.rfwc-winner-prize-image img {
+	border-color: rgba(22, 163, 74, 0.3);
+}
+
+.rfwc-draw-date {
+	margin: 1em 0 0;
+	font-size: 0.85em;
+	color: #92400e;
+	text-align: center;
+}
+
+.rfwc-winner-product-link {
+	margin: 0.5em 0 0;
+	font-size: 0.85em;
+	text-align: center;
+}
+
+.rfwc-winner-product-link a {
+	color: #92400e;
+	text-decoration: underline;
+	font-weight: 500;
+}
+
+/* Instant Win winners section — amber/lightning theme */
+.rfwc-winners-instant-win {
+	background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+	border: 2px solid #f59e0b;
+	margin-bottom: 1em;
+}
+
+.rfwc-winners-instant-win .rfwc-winners-header {
+	border-bottom-color: #f59e0b;
+}
+
+.rfwc-winners-instant-win .rfwc-winners-title {
+	color: #92400e;
+}
+
+.rfwc-winners-instant-win .rfwc-winner-item {
+	background: rgba(245, 158, 11, 0.08);
+}
+
+.rfwc-iw-bolt {
+	font-size: 1.3em;
+}
+
+/* Main draw winners section — standard gold/trophy theme */
+.rfwc-winners-main-draw {
+	background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+	border: 2px solid #fbbf24;
+}
+
+/* Admin: method badge in the winners table */
+.rfwc-method-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 0.85em;
+	font-weight: 500;
+}
+
+.rfwc-method-instant-win {
+	background: linear-gradient(135deg, #fbbf24, #f59e0b);
+	color: #78350f;
+}
+
+.rfwc-method-draw {
+	background: #e5e7eb;
+	color: #374151;
+}
+
+/* Admin: instant winner badge in tickets list */
+.rfwc-status-instant-winner {
+	background: linear-gradient(135deg, #fbbf24, #f59e0b);
+	color: #78350f;
+}
+
+/* ==========================================================================
+   Compliance: Tabs (Paid Entry / Free Entry)
+   ========================================================================== */
+
+.rfwc-compliance-tabs {
+	display: flex;
+	gap: 0;
+	margin: 1.5em 0 0;
+	border-bottom: 2px solid #e5e5e5;
+}
+
+.rfwc-compliance-tab {
+	padding: 0.75em 1.5em;
+	background: none;
+	border: none;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -2px;
+	font-size: 0.95em;
+	font-weight: 600;
+	color: #666;
+	cursor: pointer;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.rfwc-compliance-tab:hover {
+	color: var(--rfwc-accent);
+}
+
+.rfwc-compliance-tab--active {
+	color: var(--rfwc-accent);
+	border-bottom-color: var(--rfwc-accent);
+}
+
+/* Panels: only show the active one */
+.rfwc-compliance-panel {
+	display: none;
+}
+
+.rfwc-compliance-panel--active {
+	display: block;
+}
+
+/* ==========================================================================
+   Compliance: Skill-Testing Question
+   ========================================================================== */
+
+.rfwc-skill-question {
+	margin: 1.5em 0;
+	padding: 1.25em;
+	background: var(--rfwc-accent-bg-light);
+	border: 1px solid var(--rfwc-accent-border-solid);
+	border-radius: 6px;
+}
+
+.rfwc-skill-question-text {
+	margin: 0 0 0.75em;
+	font-size: 1em;
+	font-weight: 600;
+	color: #333;
+}
+
+.rfwc-compliance-notice {
+	margin: 1em 0 0.5em;
+	font-size: 0.85em;
+	color: #666;
+	font-style: italic;
+}
+
+.rfwc-required-indicator {
+	color: #dc3232;
+	font-weight: 700;
+	margin-right: 0.15em;
+}
+
+.rfwc-skill-answer-input {
+	width: 100%;
+	padding: 0.6em 0.75em;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-size: 0.95em;
+}
+
+.rfwc-skill-answer-input:focus {
+	border-color: var(--rfwc-accent);
+	outline: none;
+	box-shadow: 0 0 0 1px var(--rfwc-accent);
+}
+
+.rfwc-skill-choices {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+.rfwc-skill-choice {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	padding: 0.5em 0.75em;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.rfwc-skill-choice:hover {
+	border-color: var(--rfwc-accent);
+	background: var(--rfwc-accent-bg-hover);
+}
+
+.rfwc-skill-choice input[type="radio"] {
+	accent-color: var(--rfwc-accent);
+	margin: 0;
+}
+
+.rfwc-skill-choice span {
+	font-size: 0.95em;
+	color: #333;
+}
+
+/* ==========================================================================
+   Compliance: Free Entry Info
+   ========================================================================== */
+
+.rfwc-free-entry-info {
+	margin: 1.5em 0;
+	padding: 1.5em;
+	background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+	border: 1px solid rgba(22, 163, 74, 0.2);
+	border-left: 4px solid #16a34a;
+	border-radius: 0 6px 6px 0;
+}
+
+.rfwc-free-entry-text {
+	font-size: 0.95em;
+	color: #333;
+	line-height: 1.6;
+}
+
+.rfwc-free-entry-text p {
+	margin: 0 0 0.75em;
+}
+
+.rfwc-free-entry-text p:last-child {
+	margin-bottom: 0;
+}
+
+/* Postal address highlight within free entry text */
+
+.rfwc-postal-address {
+	font-weight: 600;
+	background: rgba(22, 163, 74, 0.1);
+	padding: 2px 6px;
+	border-radius: 3px;
+}
+
+/* Free entry skill question display (read-only for postal entrants) */
+
+.rfwc-free-entry-skill-question {
+	margin-top: 1.25em;
+	padding: 1em;
+	background: #f8f9fa;
+	border: 1px solid #e2e8f0;
+	border-radius: 6px;
+}
+
+.rfwc-free-entry-skill-note {
+	margin: 0 0 0.4em;
+	font-size: 0.85em;
+	color: #94a3b8;
+}
+
+.rfwc-free-entry-skill-text {
+	margin: 0;
+	font-size: 1.1em;
+	font-weight: 700;
+	color: #1a202c;
+}
+
+.rfwc-free-entry-skill-choices {
+	margin: 0.75em 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4em;
+}
+
+.rfwc-free-entry-skill-choices li {
+	padding: 0.45em 0.75em;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 4px;
+	font-size: 0.95em;
+	color: #333;
+}
+
+/* ==========================================================================
+   Bulk Discount Tiers
+   ========================================================================== */
+
+.rfwc-bulk-tiers {
+	margin: 1em 0;
+	padding: 0.75em 1em;
+	background: var(--rfwc-accent-bg-light, rgba(124, 58, 237, 0.04));
+	border: 1px solid var(--rfwc-accent-border-solid, rgba(124, 58, 237, 0.15));
+	border-radius: 8px;
+}
+
+.rfwc-bulk-tiers-title {
+	margin: 0 0 0.5em;
+	font-weight: 600;
+	font-size: 0.95em;
+	color: var(--rfwc-accent, #7c3aed);
+}
+
+.rfwc-bulk-tiers-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+}
+
+.rfwc-bulk-tier-item {
+	display: flex;
+	align-items: center;
+	gap: 0.4em;
+	padding: 0.4em 0.7em;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 6px;
+	font-size: 0.88em;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rfwc-bulk-tier-item.rfwc-bulk-tier-active {
+	border-color: var(--rfwc-accent, #7c3aed);
+	box-shadow: 0 0 0 1px var(--rfwc-accent, #7c3aed);
+}
+
+.rfwc-bulk-tier-qty {
+	font-weight: 600;
+}
+
+.rfwc-bulk-tier-discount {
+	color: #16a34a;
+	font-weight: 600;
+}
+
+.rfwc-bulk-tier-price {
+	color: #666;
+}
+
+.rfwc-bulk-price-preview {
+	margin-top: 0.6em;
+	padding: 0.5em 0.7em;
+	background: #fff;
+	border-radius: 6px;
+	font-size: 0.9em;
+}
+
+.rfwc-bulk-price-preview strong {
+	color: #111;
+}
+
+.rfwc-bulk-savings {
+	color: #16a34a;
+	font-weight: 600;
+}
+
+.rfwc-bulk-badge {
+	color: #16a34a;
+	font-weight: 600;
+}
+
+/* ==========================================================================
+   Instant Win Badge
+   ========================================================================== */
+
+.rfwc-instant-win-badge {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	width: fit-content;
+	margin: 12px auto;
+	background: var(--rfwc-accent-bg-light);
+	border: 1px solid var(--rfwc-accent-border-solid);
+	padding: 10px 16px;
+	border-radius: 8px;
+	gap: 2px;
+}
+
+.rfwc-badge-align-left {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+.rfwc-badge-align-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rfwc-badge-align-right {
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.rfwc-badge-align-full-width {
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.rfwc-iw-badge-title {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.rfwc-iw-badge-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	background: var(--rfwc-accent);
+	color: #fff;
+	border-radius: 50%;
+	font-size: 0.75em;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.rfwc-iw-badge-text {
+	font-size: 0.95em;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: var(--rfwc-accent-dark);
+}
+
+.rfwc-iw-badge-sub {
+	font-weight: 400;
+	font-size: 0.8em;
+	color: #666;
+}
+
+/* ==========================================================================
+   Instant Win Thank-You Page
+   ========================================================================== */
+
+.rfwc-instant-win-thankyou {
+	margin: 24px 0;
+}
+
+.rfwc-iw-result {
+	padding: 20px;
+	border-radius: 10px;
+	margin-bottom: 16px;
+}
+
+.rfwc-iw-winner {
+	background: linear-gradient(135deg, #fef3c7, #fde68a);
+	border: 2px solid #f59e0b;
+	text-align: center;
+}
+
+.rfwc-iw-winner h3 {
+	color: #92400e;
+	margin: 8px 0 12px;
+	font-size: 1.3em;
+}
+
+.rfwc-iw-icon {
+	font-size: 2.5em;
+	display: block;
+	line-height: 1;
+}
+
+.rfwc-iw-ticket-result {
+	margin: 4px 0;
+	font-size: 0.95em;
+}
+
+.rfwc-iw-ticket-won {
+	color: #92400e;
+	font-weight: 600;
+}
+
+.rfwc-iw-prize-note {
+	margin: 12px 0 4px;
+	font-size: 0.9em;
+	color: #92400e;
+}
+
+.rfwc-iw-remaining-note {
+	margin: 4px 0 0;
+	font-size: 0.85em;
+	color: #78716c;
+	font-style: italic;
+}
+
+.rfwc-iw-not-winner {
+	background: var(--rfwc-accent-bg-light, #faf5ff);
+	border: 1px solid var(--rfwc-accent-border-solid, #d4bce8);
+	color: #4a5568;
+}
+
+.rfwc-iw-not-winner p {
+	margin: 0;
+}
+
+/* ==========================================================================
+   Skill Question Timer & Dropdown
+   ========================================================================== */
+
+.rfwc-skill-timer {
+	display: inline-block;
+	margin-left: 8px;
+	font-weight: 700;
+	color: var(--rfwc-accent, #7f54b3);
+	font-size: 0.9em;
+}
+
+.rfwc-timer-warning {
+	color: #dc2626;
+	animation: rfwc-pulse 1s ease-in-out infinite;
+}
+
+.rfwc-timer-expired {
+	color: #dc2626;
+}
+
+@keyframes rfwc-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+.rfwc-skill-timer-expired-msg {
+	color: #dc2626;
+	font-weight: 600;
+	font-size: 0.9em;
+	margin: 8px 0;
+}
+
+.rfwc-skill-answer-dropdown {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	font-size: 0.95em;
+	margin-top: 8px;
+}
+
+.rfwc-skill-answer-dropdown:focus {
+	border-color: var(--rfwc-accent, #7f54b3);
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(var(--rfwc-accent-rgb, 127, 84, 179), 0.2);
+}
+
+/* ==========================================================================
+   Instant Win Tags (My Account)
+   ========================================================================== */
+
+.rfwc-iw-tag {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	vertical-align: middle;
+	margin-left: 4px;
+}
+
+.rfwc-iw-tag-won {
+	background: linear-gradient(135deg, #fbbf24, #f59e0b);
+	color: #78350f;
+	font-weight: 700;
+}
+
+.rfwc-iw-tag-lost {
+	color: #6b7280;
+	font-style: italic;
+}
+
+/* ==========================================================================
+   Guest Login Notice
+   ========================================================================== */
+
+.rfwc-guest-login-notice {
+	text-align: center;
+	padding: 20px;
+	border: 1px dashed var(--rfwc-accent-border-solid, #d4bce8);
+	border-radius: 8px;
+	background: var(--rfwc-accent-bg-light, #faf5ff);
+	margin: 16px 0;
+}
+
+.rfwc-guest-login-notice p {
+	margin: 0 0 12px;
+	color: #4a5568;
+	font-size: 0.95em;
+}
+
+.rfwc-login-button {
+	background-color: var(--rfwc-accent, #7f54b3) !important;
+	color: #fff !important;
+	border: none !important;
+	border-radius: 6px !important;
+	padding: 10px 24px !important;
+	font-weight: 600 !important;
+	transition: background-color 0.2s ease !important;
+}
+
+.rfwc-login-button:hover {
+	background-color: var(--rfwc-accent-dark, #6b47a0) !important;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+	.rfwc-prize-product-details {
+		flex-direction: column;
+	}
+
+	.rfwc-prize-product-image img {
+		width: 60px;
+		height: 60px;
+	}
+
+	.rfwc-winner-images {
+		margin-left: 0;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.rfwc-countdown {
+		gap: 6px;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.rfwc-countdown-item {
+		min-width: 50px;
+		padding: 10px 6px 8px;
+	}
+
+	.rfwc-countdown-value {
+		font-size: 1.4em;
+	}
+
+	.rfwc-countdown-unit {
+		font-size: 0.6em;
+	}
+
+	.rfwc-countdown-compact {
+		white-space: normal;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.rfwc-winners-header {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.rfwc-winner-item {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5em;
+	}
+
+	.rfwc-prize-item-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.35em;
+	}
+
+	.rfwc-quantity-wrapper {
+		flex-wrap: wrap;
+	}
+
+	.rfwc-card-body {
+		padding: 0.75em 1em;
+	}
+}
+
+/* ==========================================================================
+   INSTANT WIN RIBBON — Product image overlay
+   Like WooCommerce's .onsale badge but for Instant Win raffles.
+   ========================================================================== */
+
+.rfwc-iw-ribbon {
+	position: absolute;
+	z-index: 9;
+	display: inline-block;
+	padding: 6px 14px;
+	font-size: 0.75em;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	pointer-events: none;
+	background: var(--rfwc-accent);
+	color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(var(--rfwc-accent-rgb), 0.35);
+}
+
+.rfwc-iw-ribbon--top-right {
+	top: 8px;
+	right: 50px; /* Clear WooCommerce gallery zoom/lightbox icon */
+}
+
+.rfwc-iw-ribbon--top-left {
+	top: 8px;
+	left: 8px;
+}
+
+/* On archive/shop pages there's no zoom icon, so top-right can sit flush */
+.woocommerce ul.products .rfwc-iw-ribbon--top-right {
+	right: 8px;
+}
+
+/* Gallery wrapper needs positioning context for single product */
+.woocommerce-product-gallery {
+	position: relative;
+}
+
+/* Archive product cards — ensure positioning context */
+.woocommerce ul.products li.product {
+	position: relative;
+}

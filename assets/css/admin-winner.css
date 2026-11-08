@@ -1,0 +1,520 @@
+/**
+ * Admin Winner Selection Styles.
+ *
+ * @package RaffleForWooCommerce
+ * @since   1.0.0
+ */
+
+.rfwc-winner-selection-wrap {
+	padding: 12px;
+}
+
+/* Stats boxes */
+.rfwc-winner-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+	margin-bottom: 20px;
+}
+
+.rfwc-stat-box {
+	background: #f8f9fa;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 12px;
+	text-align: center;
+}
+
+.rfwc-stat-number {
+	display: block;
+	font-size: 24px;
+	font-weight: 600;
+	color: #7f54b3;
+	line-height: 1.2;
+}
+
+.rfwc-stat-label {
+	display: block;
+	font-size: 11px;
+	color: #646970;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-top: 4px;
+}
+
+/* Raffle status notices */
+.rfwc-raffle-status-notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 12px 14px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+}
+
+.rfwc-raffle-status-notice .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+	margin-top: 1px;
+}
+
+.rfwc-raffle-status-notice strong {
+	display: block;
+	margin-bottom: 2px;
+}
+
+.rfwc-raffle-status-notice p {
+	margin: 0;
+	font-size: 12px;
+}
+
+.rfwc-status-failed-notice {
+	background: #fcf0f1;
+	border: 1px solid #f0c7c9;
+	color: #8a1f1f;
+}
+
+.rfwc-status-failed-notice .dashicons {
+	color: #d63638;
+}
+
+.rfwc-status-cancelled-notice {
+	background: #fef0e5;
+	border: 1px solid #f0d3b8;
+	color: #7a4109;
+}
+
+.rfwc-status-cancelled-notice .dashicons {
+	color: #b05e14;
+}
+
+/* Raffle status actions */
+.rfwc-raffle-status-actions {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
+	padding: 14px;
+	background: #f8f9fa;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.rfwc-raffle-status-actions .button {
+	flex-shrink: 0;
+}
+
+.rfwc-raffle-status-actions .button.rfwc-mark-raffle-failed {
+	color: #d63638;
+	border-color: #d63638;
+}
+
+.rfwc-raffle-status-actions .button.rfwc-mark-raffle-failed:hover {
+	background: #d63638;
+	color: #fff;
+}
+
+.rfwc-raffle-status-actions .button.rfwc-cancel-raffle {
+	color: #b05e14;
+	border-color: #b05e14;
+}
+
+.rfwc-raffle-status-actions .button.rfwc-cancel-raffle:hover {
+	background: #b05e14;
+	color: #fff;
+}
+
+.rfwc-status-action-group {
+	flex: 1;
+	min-width: 200px;
+	padding: 12px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.rfwc-status-action-group .button {
+	margin-bottom: 8px;
+}
+
+.rfwc-raffle-status-actions .description {
+	color: #646970;
+	font-style: normal;
+	font-size: 12px;
+	margin: 0;
+}
+
+.rfwc-refund-note {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	width: 100%;
+	margin: 4px 0 0;
+	color: #646970;
+	font-size: 12px;
+}
+
+.rfwc-refund-note .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	color: #2271b1;
+}
+
+/* Winners list */
+.rfwc-winners-list {
+	margin-top: 16px;
+}
+
+.rfwc-winners-list h4 {
+	margin: 0 0 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.rfwc-winners-list .wp-list-table {
+	margin-bottom: 16px;
+}
+
+.rfwc-winners-list .column-tier {
+	width: 50px;
+}
+
+.rfwc-winners-list .column-status {
+	width: 80px;
+}
+
+.rfwc-winners-list .column-method {
+	width: 110px;
+}
+
+.rfwc-winners-list .column-actions {
+	width: 140px;
+}
+
+.rfwc-method-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.rfwc-method-instant-win {
+	background: linear-gradient(135deg, #fbbf24, #f59e0b);
+	color: #78350f;
+}
+
+.rfwc-method-draw {
+	background: #e5e7eb;
+	color: #374151;
+}
+
+.rfwc-prize-tier {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	background: #7f54b3;
+	color: #fff;
+	border-radius: 50%;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+/* WooCommerce status badges */
+.rfwc-winners-list mark.order-status {
+	display: inline-block;
+}
+
+/* Action buttons */
+.rfwc-winners-list .button-small {
+	margin: 2px;
+}
+
+/* Clear winners */
+.rfwc-clear-winners-wrap {
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid #dcdcde;
+}
+
+.rfwc-clear-winners-wrap .button {
+	margin-right: 8px;
+}
+
+.rfwc-clear-winners-wrap .description {
+	color: #d63638;
+	font-style: normal;
+}
+
+/* Draw section */
+.rfwc-draw-section h4,
+.rfwc-manual-section h4 {
+	margin: 0 0 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+/* Form fields - WooCommerce style */
+.rfwc-winner-selection-wrap .form-field {
+	margin-bottom: 12px;
+}
+
+.rfwc-winner-selection-wrap .form-field label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 400;
+}
+
+.rfwc-winner-selection-wrap .form-field input.rfwc-field,
+.rfwc-winner-selection-wrap .form-field select.rfwc-field {
+	width: 300px !important;
+	max-width: 100% !important;
+	box-sizing: border-box;
+}
+
+.rfwc-winner-selection-wrap .form-field .description {
+	display: block;
+	margin-top: 4px;
+	color: #646970;
+}
+
+.rfwc-winner-selection-wrap .form-field .select2-container {
+	width: 300px !important;
+	max-width: 100% !important;
+}
+
+/* Manual section */
+.rfwc-manual-section {
+	margin-top: 16px;
+}
+
+.rfwc-manual-section > .description {
+	margin-bottom: 12px;
+	color: #646970;
+}
+
+/* No tickets message */
+.rfwc-no-tickets {
+	padding: 16px;
+	background: #f8f9fa;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	text-align: center;
+	color: #646970;
+}
+
+.rfwc-no-tickets p {
+	margin: 0;
+}
+
+/* Ajax message */
+.rfwc-ajax-message {
+	padding: 10px 12px;
+	margin-top: 12px;
+	border-radius: 4px;
+}
+
+.rfwc-message-success {
+	background: #d4edda;
+	border: 1px solid #c3e6cb;
+	color: #155724;
+}
+
+.rfwc-message-error {
+	background: #f8d7da;
+	border: 1px solid #f5c6cb;
+	color: #721c24;
+}
+
+.rfwc-message-info {
+	background: #e7f3ff;
+	border: 1px solid #b8daff;
+	color: #004085;
+}
+
+/* Extend / Relist section */
+.rfwc-extend-relist-section {
+	margin-bottom: 16px;
+	padding: 16px;
+	background: #f8f9fa;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.rfwc-extend-relist-section h4 {
+	margin: 0 0 14px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.rfwc-extend-date-row {
+	margin-bottom: 16px;
+}
+
+.rfwc-extend-date-row > .description {
+	display: block;
+	margin-top: 6px;
+	color: #646970;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.rfwc-extend-date-inputs {
+	display: flex;
+	gap: 8px;
+}
+
+.rfwc-extend-date-inputs .rfwc-field {
+	box-sizing: border-box;
+}
+
+.rfwc-extend-date-inputs .rfwc-field:first-child {
+	width: 160px;
+}
+
+.rfwc-extend-date-inputs .rfwc-field:last-child {
+	width: 80px;
+}
+
+.rfwc-extend-relist-buttons {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.rfwc-extend-relist-action {
+	flex: 1;
+	min-width: 200px;
+	padding: 12px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.rfwc-extend-relist-action .button {
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 8px;
+}
+
+.rfwc-extend-relist-action .description {
+	display: block;
+	color: #646970;
+	font-style: normal;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+/* HR styling */
+.rfwc-winner-selection-wrap hr {
+	margin: 16px 0;
+	border: 0;
+	border-top: 1px solid #dcdcde;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+	.rfwc-winner-stats {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+	}
+
+	.rfwc-stat-box {
+		padding: 8px;
+	}
+
+	.rfwc-stat-number {
+		font-size: 18px;
+	}
+
+	.rfwc-stat-label {
+		font-size: 9px;
+	}
+
+	.rfwc-winners-list .wp-list-table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	.rfwc-winner-selection-wrap .form-field input.rfwc-field,
+	.rfwc-winner-selection-wrap .form-field select.rfwc-field {
+		width: 100% !important;
+	}
+
+	.rfwc-winner-selection-wrap .form-field .select2-container {
+		width: 100% !important;
+	}
+
+	.rfwc-winner-selection-wrap .form-field .description {
+		display: block;
+		margin-left: 0;
+		margin-top: 4px;
+	}
+
+	.rfwc-winners-list .column-actions {
+		width: auto;
+	}
+
+	.rfwc-winners-list .column-actions .button-small {
+		display: block;
+		width: 100%;
+		margin: 4px 0;
+	}
+
+	.rfwc-extend-relist-buttons {
+		flex-direction: column;
+	}
+
+	.rfwc-extend-relist-action {
+		min-width: 0;
+	}
+
+	.rfwc-extend-date-inputs .rfwc-field:first-child {
+		flex: 1;
+		width: auto;
+	}
+}
+
+.rfwc-manual-disabled-notice {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 14px;
+	background: #f0f0f1;
+	border-left: 4px solid #dba617;
+	color: #50575e;
+	font-size: 13px;
+}
+
+.rfwc-manual-disabled-notice .dashicons {
+	color: #dba617;
+}
+
+@media screen and (max-width: 480px) {
+	.rfwc-winner-stats {
+		grid-template-columns: 1fr;
+	}
+
+	.rfwc-stat-box {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		text-align: left;
+	}
+
+	.rfwc-stat-number {
+		order: 2;
+	}
+
+	.rfwc-stat-label {
+		order: 1;
+		margin-top: 0;
+	}
+}

@@ -1,0 +1,37 @@
+parameters:
+	level: 2
+	paths:
+		- .
+	excludePaths:
+		analyseAndScan:
+			- vendor (?)
+			- node_modules (?)
+			- docs (?)
+			- assets/js/lib
+	parallel:
+		maximumNumberOfProcesses: 1
+	bootstrapFiles:
+		- vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+	ignoreErrors:
+		# Constants defined in main plugin file or WordPress core
+		- '#Constant RFWC_.+ not found#'
+		- '#Constant DAY_IN_SECONDS not found#'
+		- '#Constant EP_(PAGES|ROOT) not found#'
+		- '#Constant DB_NAME not found#'
+		# PHPDoc @var without variable name (plugin header constants)
+		- '#PHPDoc tag @var does not specify variable name#'
+		# Custom RFWC_Product_Raffle methods not in WC_Product stubs
+		- '#Call to an undefined method WC_Product::.+#'
+		# WooCommerce order item methods
+		- '#Call to an undefined method WC_Order_Item::.+#'
+		# HPOS Controller class (not in stubs)
+		- '#CustomOrdersTableController#'
+		# PHPDoc extends parsing issues
+		- '#PHPDoc tag @extends has invalid value#'
+		# isset()/empty() on template variables that always exist
+		- '#Variable .+ in (empty|isset)\(\) always exists#'
+		# Dynamic properties on model classes and DB result objects
+		- '#Access to an undefined property .+::.+#'
+		# WC_Product|false method calls (product retrieval)
+		- '#Cannot call method .+ on WC_Product\|false#'

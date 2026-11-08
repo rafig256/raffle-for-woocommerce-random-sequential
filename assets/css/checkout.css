@@ -1,0 +1,289 @@
+/**
+ * Raffle for WooCommerce - Classic Checkout Styles
+ *
+ * Styles for gift purchase fields on the classic (shortcode) checkout page,
+ * including per-ticket recipient management.
+ *
+ * @package RaffleForWooCommerce
+ * @since   1.0.0
+ */
+
+/**
+ * Gift checkout section.
+ *
+ * --rfwc-interactive inherits the WooCommerce / theme primary color.
+ * --wc-primary is set by WooCommerce (Appearance settings).
+ * --wp--preset--color--primary is set by the active block theme.
+ */
+.rfwc-gift-checkout {
+	--rfwc-interactive: var(--wc-primary, var(--wp--preset--color--primary, #333));
+	margin: 2em 0;
+	padding: 1.5em;
+	background: #f8f8f8;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+
+.rfwc-gift-checkout h3 {
+	margin: 0 0 0.5em;
+	padding: 0;
+	font-size: 1.2em;
+	color: #333;
+}
+
+.rfwc-gift-description {
+	margin: 0 0 1em;
+	font-size: 0.9em;
+	color: #666;
+}
+
+/**
+ * Gift checkbox field.
+ */
+.rfwc-is-gift-field {
+	margin-bottom: 1em;
+}
+
+.rfwc-is-gift-field label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.rfwc-is-gift-field input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+}
+
+/**
+ * Recipient fields container.
+ */
+.rfwc-gift-recipient-fields {
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px solid #e0e0e0;
+}
+
+/**
+ * Per-item gift groups.
+ */
+.rfwc-gift-item-group {
+	margin-bottom: 1.5em;
+	padding-bottom: 1.5em;
+	border-bottom: 1px dashed #d0d0d0;
+}
+
+.rfwc-gift-item-group:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+/**
+ * Subtle product label (only shows when multiple raffle products in cart).
+ */
+.rfwc-gift-item-label {
+	font-size: 0.75em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #888;
+	margin-bottom: 0.75em;
+}
+
+/**
+ * Individual recipient field sets.
+ */
+.rfwc-gift-recipient-set {
+	margin-bottom: 1.25em;
+	padding: 1em;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+}
+
+.rfwc-gift-recipient-set:last-child {
+	margin-bottom: 0.75em;
+}
+
+.rfwc-gift-recipient-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.75em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.rfwc-recipient-number {
+	font-weight: 600;
+	font-size: 0.95em;
+	color: #333;
+}
+
+/**
+ * Remove recipient button - neutral by default, themed on hover.
+ */
+.rfwc-remove-recipient {
+	background: none;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	color: #767676;
+	font-size: 0.8em;
+	padding: 0.25em 0.6em;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rfwc-remove-recipient:hover {
+	border-color: var(--rfwc-interactive);
+	color: var(--rfwc-interactive);
+}
+
+.rfwc-remove-recipient:focus-visible {
+	outline: 2px solid var(--rfwc-interactive);
+	outline-offset: 2px;
+}
+
+/**
+ * Recipient field rows.
+ */
+.rfwc-recipient-fields-row {
+	display: flex;
+	gap: 1em;
+}
+
+.rfwc-recipient-fields-row .form-row {
+	flex: 1;
+	float: none;
+	width: auto;
+}
+
+.rfwc-gift-recipient-set .form-row {
+	margin-bottom: 0.75em;
+}
+
+.rfwc-gift-recipient-set .form-row:last-child {
+	margin-bottom: 0;
+}
+
+.rfwc-gift-recipient-set .form-row label {
+	font-weight: 500;
+	font-size: 0.9em;
+	margin-bottom: 0.25em;
+	display: block;
+}
+
+.rfwc-gift-recipient-set .form-row input,
+.rfwc-gift-recipient-set .form-row textarea {
+	width: 100%;
+}
+
+.rfwc-gift-recipient-set .form-row textarea {
+	min-height: 50px;
+	resize: vertical;
+}
+
+/**
+ * Add recipient button - neutral by default, themed on hover.
+ */
+.rfwc-add-recipient {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
+	margin-top: 0.5em;
+	padding: 0.5em 1em;
+	background: transparent;
+	border: 1px dashed #ccc;
+	border-radius: 4px;
+	color: #555;
+	font-size: 0.9em;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.rfwc-add-recipient:hover {
+	border-color: var(--rfwc-interactive);
+	color: var(--rfwc-interactive);
+	border-style: solid;
+}
+
+.rfwc-add-recipient:focus-visible {
+	outline: 2px solid var(--rfwc-interactive);
+	outline-offset: 2px;
+}
+
+/**
+ * Required field indicator.
+ */
+.rfwc-gift-recipient-set .required {
+	color: #c00;
+}
+
+/**
+ * "This ticket is for me" toggle.
+ */
+.rfwc-self-claim-field {
+	margin: 0 0 0.75em;
+	padding-bottom: 0.75em;
+	border-bottom: 1px dashed #eee;
+}
+
+.rfwc-self-claim-field label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	font-weight: 500;
+	font-size: 0.9em;
+	color: #444;
+	cursor: pointer;
+}
+
+.rfwc-self-claim-field input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+}
+
+.rfwc-self-claim-note {
+	margin: 0;
+	padding: 0.6em 0.8em;
+	background: #f0f6fb;
+	border-left: 3px solid var(--rfwc-interactive);
+	border-radius: 3px;
+	font-size: 0.9em;
+	color: #444;
+}
+
+/**
+ * Hidden helper.
+ */
+.rfwc-hidden {
+	display: none !important;
+}
+
+/**
+ * Responsive adjustments.
+ */
+@media screen and (max-width: 768px) {
+	.rfwc-gift-checkout {
+		padding: 1em;
+	}
+
+	.rfwc-recipient-fields-row {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.rfwc-recipient-fields-row .form-row {
+		width: 100%;
+	}
+
+	.rfwc-gift-recipient-set {
+		padding: 0.75em;
+	}
+}

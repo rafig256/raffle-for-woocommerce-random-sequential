@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<ruleset name="Raffle for WooCommerce">
+	<description>PHP Code Sniffer configuration for Raffle for WooCommerce.</description>
+
+	<!-- What to scan -->
+	<file>.</file>
+
+	<!-- Exclude paths -->
+	<exclude-pattern>vendor/</exclude-pattern>
+	<exclude-pattern>node_modules/</exclude-pattern>
+	<exclude-pattern>docs/</exclude-pattern>
+	<exclude-pattern>*.min.js</exclude-pattern>
+	<exclude-pattern>*.min.css</exclude-pattern>
+
+	<!-- Show progress and sniff codes -->
+	<arg value="ps"/>
+	<arg name="colors"/>
+
+	<!-- Strip paths for reports -->
+	<arg name="basepath" value="."/>
+
+	<!-- Check up to 8 files in parallel -->
+	<arg name="parallel" value="8"/>
+
+	<!-- Check for PHP cross-version compatibility -->
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- WordPress Coding Standards -->
+	<rule ref="WordPress">
+		<!-- Allow short array syntax -->
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<!-- We use spaces for alignment in arrays -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
+	</rule>
+
+	<!-- WordPress Extra Standards -->
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+	</rule>
+
+	<!-- WordPress Documentation Standards -->
+	<rule ref="WordPress-Docs"/>
+
+	<!-- Text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="raffle-for-woocommerce"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Custom capabilities provided by WooCommerce -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="manage_woocommerce"/>
+				<element value="view_woocommerce_reports"/>
+				<element value="edit_shop_orders"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Prefixes for functions, classes, hooks, etc. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="rfwc"/>
+				<element value="RFWC"/>
+				<element value="Raffle_For_WooCommerce"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Minimum WP version -->
+	<config name="minimum_wp_version" value="6.0"/>
+
+	<!-- Allow trigger_error for deprecations -->
+	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_trigger_error">
+		<type>warning</type>
+	</rule>
+
+	<!-- Allow error logging in specific contexts -->
+	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_error_log">
+		<type>warning</type>
+	</rule>
+
+	<!-- Main plugin file uses singleton class + global helper functions (standard WP pattern) -->
+	<rule ref="Universal.Files.SeparateFunctionsFromOO.Mixed">
+		<exclude-pattern>raffle-for-woocommerce.php</exclude-pattern>
+	</rule>
+</ruleset>
+
