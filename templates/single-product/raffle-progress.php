@@ -18,6 +18,13 @@ defined( 'ABSPATH' ) || exit;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables from wc_get_template().
 ?>
+<?php if ( 'unlimited' !== $available ) : ?>
+    <div class="rfwc-remaining-capacity">
+        <span>ظرفیت باقی‌مانده:</span>
+        <strong><?php echo esc_html( number_format_i18n( $available ) ); ?></strong>
+        <span>نفر</span>
+    </div>
+<?php endif; ?>
 <div class="rfwc-progress-wrapper">
 	<?php if ( 'unlimited' === $total ) : ?>
 		<div class="rfwc-tickets-info">
