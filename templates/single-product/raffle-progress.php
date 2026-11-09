@@ -20,9 +20,21 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <?php if ( 'unlimited' !== $available ) : ?>
     <div class="rfwc-remaining-capacity">
-        <span>ظرفیت باقی‌مانده:</span>
-        <strong><?php echo esc_html( number_format_i18n( $available ) ); ?></strong>
-        <span>نفر</span>
+        <?php if ( 'unlimited' !== $available ) : ?>
+            <div class="rfwc-remaining-capacity">
+        <span>
+            <?php esc_html_e( 'Remaining capacity:', 'raffle-for-woocommerce' ); ?>
+        </span>
+
+                <strong>
+                    <?php echo esc_html( number_format_i18n( $available ) ); ?>
+                </strong>
+
+                <span>
+            <?php echo esc_html( _n( 'person', 'people', $available, 'raffle-for-woocommerce' ) ); ?>
+        </span>
+            </div>
+        <?php endif; ?>
     </div>
 <?php endif; ?>
 <div class="rfwc-progress-wrapper">
