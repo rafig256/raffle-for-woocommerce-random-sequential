@@ -672,6 +672,7 @@ class RFWC_Admin_Tickets {
 							<th scope="col" class="manage-column column-raffle"><?php esc_html_e( 'Raffle', 'raffle-for-woocommerce' ); ?></th>
 							<th scope="col" class="manage-column column-holder"><?php esc_html_e( 'Ticket Holder', 'raffle-for-woocommerce' ); ?></th>
 							<th scope="col" class="manage-column column-purchaser"><?php esc_html_e( 'Purchased By', 'raffle-for-woocommerce' ); ?></th>
+							<th scope="col" class="manage-column column-phone"><?php esc_html_e( 'Phone', 'raffle-for-woocommerce' ); ?></th>
 							<th scope="col" class="manage-column column-order"><?php esc_html_e( 'Order', 'raffle-for-woocommerce' ); ?></th>
 							<th scope="col" class="manage-column column-date"><?php esc_html_e( 'Date', 'raffle-for-woocommerce' ); ?></th>
 						</tr>
@@ -679,14 +680,18 @@ class RFWC_Admin_Tickets {
 				<tbody id="the-list">
 					<?php
 					$raffle_completed_cache = array();
+					$order_phone_cache = array();
 					?>
 					<?php foreach ( $tickets as $ticket ) : ?>
 						<?php
 						$raffle_id_loop = $ticket->get_raffle_id();
 						$raffle         = wc_get_product( $raffle_id_loop );
 						$raffle_name    = $raffle ? $raffle->get_name() : __( 'Unknown', 'raffle-for-woocommerce' );
-						$order_id       = $ticket->get_order_id();
-						$order_url      = admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order_id );
+						$order_id = $ticket->get_order_id();
+						if ( ! isset( $order_phone_cache[ $order_id ] ) ) {
+							$order = wc_get_order( $order_id );
+							$order_phone_cache[ $order_id ] = $order ? $order->get_billing_phone() : '';
+						}
 						$status         = $ticket->get_status();
 						$is_gift        = $ticket->is_gift();
 
@@ -747,6 +752,9 @@ class RFWC_Admin_Tickets {
 								<td class="column-purchaser">
 									<?php echo esc_html( $ticket->get_purchaser_name() ); ?>
 									<br><span class="rfwc-text-secondary"><?php echo esc_html( $ticket->get_purchaser_email() ); ?></span>
+								</td>
+								<td class="column-phone">
+									<?php echo ! empty( $order_phone_cache[ $order_id ] ) ? esc_html( $order_phone_cache[ $order_id ] ) : '—'; ?>
 								</td>
 								<td class="column-order">
 									<a href="<?php echo esc_url( $order_url ); ?>">#<?php echo esc_html( $order_id ); ?></a>
