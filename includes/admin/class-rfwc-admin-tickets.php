@@ -688,6 +688,7 @@ class RFWC_Admin_Tickets {
 						$raffle         = wc_get_product( $raffle_id_loop );
 						$raffle_name    = $raffle ? $raffle->get_name() : __( 'Unknown', 'raffle-for-woocommerce' );
 						$order_id = $ticket->get_order_id();
+                        $order_url = admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order_id );
 						if ( ! isset( $order_phone_cache[ $order_id ] ) ) {
 							$order = wc_get_order( $order_id );
 							$order_phone_cache[ $order_id ] = $order ? $order->get_billing_phone() : '';
